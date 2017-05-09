@@ -75,8 +75,9 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 				side = face.getOpposite();
 
 			worldIn.setBlockState(pos, state.withProperty(BlockDirectional.FACING, side), 3);
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

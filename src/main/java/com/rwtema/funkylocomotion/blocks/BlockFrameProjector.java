@@ -106,8 +106,9 @@ public class BlockFrameProjector extends BlockFLMultiState {
 					BlockHelper.markBlockForUpdate(worldIn, pos);
 				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
