@@ -24,6 +24,12 @@ public abstract class BlockFLMultiState extends Block {
 	@Override
 	public abstract int getMetaFromState(IBlockState state);
 
+	@Override
+	public int damageDropped(IBlockState state)
+	{
+		return getMetaFromState(state);
+	}
+
 	@SuppressWarnings("NullableProblems")
 	@Override
 	public abstract IBlockState getStateFromMeta(int meta);
