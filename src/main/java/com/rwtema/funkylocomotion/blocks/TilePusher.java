@@ -53,6 +53,9 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		cooldown = tag.getInteger("cooldown");
+		if (!worldObj.isRemote && cooldown == 0) {
+			MoverEventHandler.registerMover(this);
+		}
 		powered = tag.getBoolean("Powered");
 
 		String name = tag.getString("Name");
@@ -274,7 +277,7 @@ public class TilePusher extends TilePowered implements IMover, ITickable {
 
 	@Override
 	public void update() {
-		if (cooldown > 0) {
+		if (!this.worldObj.isRemote && cooldown > 0) {
 			cooldown--;
 			if (cooldown == 0) {
 				MoverEventHandler.registerMover(this);
