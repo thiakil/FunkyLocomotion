@@ -132,6 +132,12 @@ public abstract class TileMovingBase extends TileEntity implements ITickable {
 		return tag;
 	}
 
+	@Override
+	@Nonnull
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
 	@Nullable
 	public EnumFacing getDir() {
 		if (dir < 0 || dir >= 6)

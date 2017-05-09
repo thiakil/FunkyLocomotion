@@ -24,27 +24,6 @@ public class TileMovingServer extends TileMovingBase {
 	}
 
 	@Override
-	@Nonnull
-	public NBTTagCompound getUpdateTag() {
-		NBTTagCompound updateTag = super.getUpdateTag();
-
-		updateTag.setInteger("Time", time);
-		updateTag.setInteger("MaxTime", maxTime);
-		updateTag.setByte("Dir", (byte) dir);
-
-		if (lightLevel > 0)
-			updateTag.setByte("Light", (byte) lightLevel);
-		if (lightOpacity > 0)
-			updateTag.setShort("Opacity", (short) lightOpacity);
-
-		if (collisions.length > 0) {
-			updateTag.setTag("Collisions", TagsAxis(collisions));
-		}
-
-		return updateTag;
-	}
-
-	@Override
 	public void onChunkUnload() {
 		super.onChunkUnload();
 		MovingTileRegistry.deregister(this);

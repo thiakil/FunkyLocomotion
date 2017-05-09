@@ -54,26 +54,17 @@ public class TileMovingClient extends TileMovingBase {
 			tile.invalidate();
 	}
 
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		block = Block.getBlockById(desc.getInteger("Block"));
+		meta = desc.getInteger("Meta");
+	}
+
 	@Override
-	public void handleUpdateTag(NBTTagCompound tag) {
-		block = Block.getBlockById(tag.getInteger("Block"));
-		meta = tag.getInteger("Meta");
-
-		time = tag.getInteger("Time");
-		maxTime = tag.getInteger("MaxTime");
-
-		lightLevel = tag.getInteger("Light");
-		lightOpacity = tag.getShort("Opacity");
-
-		isAir = block == Blocks.AIR;
-
-		if (tag.hasKey("Collisions", 9)) {
-			collisions = AxisTags(tag.getTagList("Collisions", 10));
-		}
+	public void handleUpdateTag(@Nonnull  NBTTagCompound tag) {
+		super.handleUpdateTag(tag);
 
 //		BlockHelper.postUpdateBlock(worldObj, pos);
-
-		dir = tag.getByte("Dir");
 
 		TileEntity tile = null;
 
@@ -94,10 +85,10 @@ public class TileMovingClient extends TileMovingBase {
 			this.tile = tile;
 			render = true;
 		} else {
-			render = !tag.getBoolean("DNR");
+			render = !tag.getBoolean("DNR");//nb: can't see this set anywhere
 
 			if (render) {
-				this.tile = Describer.recreateTileEntity(tag, getState(), pos, FakeWorldClient.getFakeWorldWrapper(this.worldObj));
+				this.tile = Describer.recreateTileEntity(desc, getState(), pos, FakeWorldClient.getFakeWorldWrapper(this.worldObj));
 			}
 		}
 
