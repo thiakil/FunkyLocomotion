@@ -57,8 +57,8 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 
 	@Override
 	public void getSubBlocks(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> list) {
-		list.add(new ItemStack(itemIn, 1, 0));
-		list.add(new ItemStack(itemIn, 1, 1));
+		list.add(new ItemStack(itemIn, 1, PushPullType.PUSHER.itemMeta));
+		list.add(new ItemStack(itemIn, 1, PushPullType.PULLER.itemMeta));
 	}
 
 	@Override
@@ -139,14 +139,26 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 		return state;
 	}
 
+	@Override
+	public int damageDropped(IBlockState state)
+	{
+		try {
+			return state.getValue(PUSH_PULL_TYPE).itemMeta;
+		} catch (Exception e){//no such state for this object, e.g. subclass
+			return 0;
+		}
+	}
+
 	enum PushPullType implements IStringSerializable {
-		PUSHER(0),
-		PULLER(6);
+		PUSHER(0,0),
+		PULLER(6,1);
 
 		public final int metaMask;
+		public final int itemMeta;
 
-		PushPullType(int metaMask) {
+		PushPullType(int metaMask, int itemMeta) {
 			this.metaMask = metaMask;
+			this.itemMeta = itemMeta;
 		}
 
 		@Override
