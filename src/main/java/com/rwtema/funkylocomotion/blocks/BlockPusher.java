@@ -40,7 +40,7 @@ public class BlockPusher extends BlockFLMultiState implements ISlipperyBlock {
 	@Override
 	public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, ItemStack stack) {
 		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, stack)
-				.withProperty(BlockDirectional.FACING, EnumFacing.UP);
+				.withProperty(BlockDirectional.FACING, facing.getOpposite());
 	}
 
 	@Override
